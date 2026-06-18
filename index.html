@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Asteroids</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="ui">
+    Очки: <span id="score">0</span>
+</div>
+
+<div id="startScreen">
+    <h1>🚀 Asteroids</h1>
+    <p>Управляйте кораблём пальцем и уклоняйтесь от астероидов</p>
+    <p>Наберите 50 очков чтобы пройти кросстендовый конкурс</p>
+    <button id="startButton">Начать игру</button>
+</div>
+
+<div id="gameOver">
+    <h1>💥 Столкновение!</h1>
+    <p id="finalScore"></p>
+    <button onclick="restartGame()">Играть снова</button>
+</div>
+
+<canvas id="game"></canvas>
+
+<script src="index.js"></script>
+
+</body>
+</html>
