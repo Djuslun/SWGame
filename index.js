@@ -6,9 +6,13 @@ const gameOverEl = document.getElementById("gameOver");
 const finalScoreEl = document.getElementById("finalScore");
 const startScreen = document.getElementById("startScreen");
 const startButton = document.getElementById("startButton");
+const scoreElement = document.getElementById("ui");
 
 let width;
 let height;
+
+const REFERENCE_HEIGHT = 800;
+const TARGET_FPS = 60;
 
 let ship;
 let asteroids;
@@ -16,10 +20,15 @@ let score;
 let difficulty;
 let spawnTimer;
 let gameRunning;
+let lastTime;
 
 function resizeCanvas() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
+}
+
+function showScore(visible) {
+    scoreElement.classList[visible ? 'add' : 'remove']('visible')
 }
 
 window.addEventListener("resize", resizeCanvas);
@@ -29,29 +38,32 @@ function init() {
     ship = {
         x: width / 2,
         targetX: width / 2,
-        y: height - 120,
+        y: height - 150,
         size: 22
     };
 
     asteroids = [];
 
     score = 0;
-    difficulty = 1;
+    difficulty = 10;
     spawnTimer = 0;
     gameRunning = false;
+    lastTime = null;
 
     scoreEl.textContent = score;
     gameOverEl.style.display = "none";
+    showScore(true);
 }
 
 function createAsteroid() {
     const radius = 15 + Math.random() * 25;
+    const baseSpeed = 2 + Math.random() * difficulty;
 
     asteroids.push({
         x: Math.random() * width,
         y: -radius,
         r: radius,
-        speed: 2 + Math.random() * difficulty * 0.8,
+        speed: baseSpeed * TARGET_FPS * (height / REFERENCE_HEIGHT),
         rotation: Math.random() * Math.PI * 2
     });
 }
@@ -136,35 +148,45 @@ function gameOver() {
         `Ваш результат: ${score}`;
 
     gameOverEl.style.display = "flex";
+    showScore(false)
 }
 
 function restartGame() {
     init();
     gameRunning = true;
-    update();
+    requestAnimationFrame(update);
+    showScore(true)
 }
 
 window.restartGame = restartGame;
 
-function update() {
+function update(timestamp) {
     if (!gameRunning) return;
+
+    if (lastTime === null) {
+        lastTime = timestamp;
+        requestAnimationFrame(update);
+        return;
+    }
+
+    const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
+    lastTime = timestamp;
 
     ctx.clearRect(0, 0, width, height);
 
     drawStars();
 
-    const moveSpeed = 0.1;
+    const lerpFactor = 1 - Math.pow(1 - 0.1, dt * TARGET_FPS);
+    ship.x += (ship.targetX - ship.x) * lerpFactor;
 
-    ship.x += (ship.targetX - ship.x) * moveSpeed;
+    difficulty += 0.01 * TARGET_FPS * dt;
 
-    difficulty += 0.0015;
+    spawnTimer += dt;
 
-    spawnTimer++;
+    const spawnInterval =
+        Math.max(18, 60 - difficulty * 2) / TARGET_FPS;
 
-    const spawnRate =
-        Math.max(18, 60 - difficulty * 2);
-
-    if (spawnTimer > spawnRate) {
+    if (spawnTimer >= spawnInterval) {
         spawnTimer = 0;
         createAsteroid();
     }
@@ -172,8 +194,8 @@ function update() {
     for (let i = asteroids.length - 1; i >= 0; i--) {
         const asteroid = asteroids[i];
 
-        asteroid.y += asteroid.speed;
-        asteroid.rotation += 0.02;
+        asteroid.y += asteroid.speed * dt;
+        asteroid.rotation += 0.02 * TARGET_FPS * dt;
 
         drawAsteroid(asteroid);
 
@@ -225,5 +247,5 @@ startButton.addEventListener("click", () => {
     init();
     gameRunning = true;
 
-    update();
+    requestAnimationFrame(update);
 });
