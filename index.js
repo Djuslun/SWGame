@@ -45,7 +45,7 @@ function init() {
     asteroids = [];
 
     score = 0;
-    difficulty = 10;
+    difficulty = 6;
     spawnTimer = 0;
     gameRunning = false;
     lastTime = null;
@@ -179,7 +179,7 @@ function update(timestamp) {
     const lerpFactor = 1 - Math.pow(1 - 0.1, dt * TARGET_FPS);
     ship.x += (ship.targetX - ship.x) * lerpFactor;
 
-    difficulty += 0.01 * TARGET_FPS * dt;
+    difficulty += 0.005 * TARGET_FPS * dt;
 
     spawnTimer += dt;
 
