@@ -19,7 +19,6 @@ let winCallback = null;
 let isHyperdrive = false;
 let hyperdriveProgress = 0;
 let shipYOffset = 0;
-let gameTime = 0;
 let starOffset = 0;
 
 export function setGameOverCallback(callback) {
@@ -66,7 +65,7 @@ function updateHyperdrive(timestamp) {
 
     hyperdriveProgress += 0.008;
     shipYOffset -= 8;
-    starOffset += 2; // Двигаем звезды во время гиперпрыжка
+    starOffset += 2;
 
     ctx.clearRect(0, 0, width, height);
     drawStars(ctx, width, height, starOffset);
@@ -89,7 +88,7 @@ function updateHyperdrive(timestamp) {
 export function update(timestamp, scoreEl) {
     if (!gameRunning) return;
 
-    if (score >= 30 && !isHyperdrive) {
+    if (score >= 300 && !isHyperdrive) {
         isHyperdrive = true;
         hyperdriveProgress = 0;
         shipYOffset = 0;
@@ -107,8 +106,7 @@ export function update(timestamp, scoreEl) {
     const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
     setLastTime(timestamp);
 
-    // Увеличиваем смещение звезд (движение вниз)
-    starOffset += dt * 60; // 60 пикселей в секунду
+    starOffset += dt * 60;
 
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
@@ -131,7 +129,7 @@ export function update(timestamp, scoreEl) {
         setDifficulty(difficulty + 0.005 * TARGET_FPS * dt);
     }
 
-    // Спавн щита
+    // Спавн щита при 60 очках
     if (score >= SHIELD_SPAWN_SCORE && !shieldSpawned && !hasShield) {
         const newShield = createShield();
         setShield(newShield);

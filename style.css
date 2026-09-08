@@ -8,7 +8,7 @@
 body {
     overflow: hidden;
     background: #0d0d1c;
-    font-family: Arial, sans-serif;
+    font-family: 'Georgia', 'Times New Roman', serif;
 }
 
 canvas {
@@ -27,12 +27,316 @@ canvas {
     z-index: 10;
     text-shadow: 0 0 5px black;
     display: none;
+    
 }
 
 #ui.visible {
     display: block;
 }
 
+/* ===== КНОПКА-МЕДАЛЬ ===== */
+.medal-button {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: linear-gradient(145deg, #ffd700, #f0c000);
+    border: none;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4),
+    inset 0 -3px 0 rgba(0,0,0,0.2),
+    inset 0 3px 0 rgba(255,255,255,0.4);
+    transition: all 0.3s ease;
+    animation: medalPulse 2s ease-in-out infinite;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.medal-button.show {
+    display: flex;
+}
+
+.medal-button:hover {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.6),
+    inset 0 -3px 0 rgba(0,0,0,0.2),
+    inset 0 3px 0 rgba(255,255,255,0.4);
+}
+
+.medal-button:active {
+    transform: scale(0.95);
+}
+
+.medal-icon {
+    font-size: 28px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.medal-text {
+    font-size: 8px;
+    font-weight: bold;
+    color: #5a3e00;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: -2px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.medal-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4444;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(255, 68, 68, 0.5);
+    border: 2px solid white;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+@keyframes medalPulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.4),
+        inset 0 -3px 0 rgba(0,0,0,0.2),
+        inset 0 3px 0 rgba(255,255,255,0.4);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.7),
+        inset 0 -3px 0 rgba(0,0,0,0.2),
+        inset 0 3px 0 rgba(255,255,255,0.4);
+    }
+}
+
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.1);
+    overflow-y: auto;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+    padding-bottom: 15px;
+}
+
+.modal-header h2 {
+    color: #ffd700;
+    font-size: 24px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    margin: 0;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 32px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0 10px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.modal-close:hover {
+    color: white;
+}
+
+.modal-body {
+    padding: 5px 0;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.result-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.result-label {
+    color: #aaa;
+    font-size: 14px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.result-value {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.result-best .result-value {
+    color: #ffd700;
+    font-size: 24px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.result-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 215, 0, 0.3), transparent);
+    margin: 15px 0;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.modal-button:first-child {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.modal-button:first-child:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.reset-button {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff4444;
+}
+
+.reset-button:hover {
+    background: rgba(255, 68, 68, 0.3);
+}
+
+/* ===== СТАРТОВЫЙ ЭКРАН ===== */
+#startScreen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    background: rgba(19, 24, 34, 0.85);
+    color: white;
+    z-index: 30;
+    text-align: center;
+    padding: 20px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    /* Фоновое изображение */
+    background-image: url('./assets/background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Затемнение поверх фона для читаемости текста */
+#startScreen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+#startScreen h1 {
+    font-size: 42px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    text-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 1;
+}
+
+#startScreen p {
+    font-size: 18px;
+    max-width: 320px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 1;
+}
+
+#startScreen button {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== GAME OVER ===== */
 #gameOver {
     position: absolute;
     inset: 0;
@@ -41,13 +345,49 @@ canvas {
     align-items: center;
     flex-direction: column;
     gap: 15px;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.7);
     color: white;
     z-index: 20;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    /* Фоновое изображение */
+    background-image: url('./assets/background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Затемнение поверх фона для читаемости текста */
+#gameOver::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
 }
 
 #gameOver h1 {
     font-size: 40px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    text-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 1;
+}
+
+#gameOver p {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 1;
+}
+
+#gameOver button {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    position: relative;
+    z-index: 1;
 }
 
 button {
@@ -58,32 +398,68 @@ button {
     color: white;
     font-size: 18px;
     cursor: pointer;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    transition: all 0.3s ease;
 }
 
 button:hover {
     background: #1976d2;
+    transform: scale(1.05);
 }
 
-#startScreen {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    background: rgba(19, 24, 34, 0.95);
-    color: white;
-    z-index: 30;
+/* Адаптив для мобильных */
+@media (max-width: 480px) {
+    .medal-button {
+        width: 56px;
+        height: 56px;
+        top: 12px;
+        right: 12px;
+    }
+
+    .medal-icon {
+        font-size: 22px;
+    }
+
+    .medal-text {
+        font-size: 6px;
+    }
+
+    .medal-count {
+        font-size: 9px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .modal-header h2 {
+        font-size: 20px;
+    }
+
+    .result-item {
+        padding: 10px 12px;
+    }
+
+    .result-value {
+        font-size: 16px;
+    }
+
+    #startScreen h1 {
+        font-size: 32px;
+    }
+
+    #startScreen p {
+        font-size: 16px;
+    }
+
+    #gameOver h1 {
+        font-size: 32px;
+    }
+}
+
+#finalScore {
     text-align: center;
-    padding: 20px;
-}
-
-#startScreen h1 {
-    font-size: 42px;
-}
-
-#startScreen p {
-    font-size: 18px;
-    max-width: 320px;
 }

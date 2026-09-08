@@ -8,6 +8,7 @@ export let difficulty = 5;
 export let spawnTimer = 0;
 export let gameRunning = false;
 export let lastTime = null;
+export let showHitboxes = false;
 export let tutorialActive = false;
 export let tutorialShipX = 0;
 export let tutorialAsteroids = [];
@@ -18,6 +19,7 @@ export let shield = null;
 export let hasShield = false;
 export let shieldCollected = false;
 export let shieldSpawned = false;
+export let starField = []; // Массив звезд
 
 export function setWidth(value) { width = value; }
 export function setHeight(value) { height = value; }
@@ -28,6 +30,7 @@ export function setDifficulty(value) { difficulty = value; }
 export function setSpawnTimer(value) { spawnTimer = value; }
 export function setGameRunning(value) { gameRunning = value; }
 export function setLastTime(value) { lastTime = value; }
+    export function setShowHitboxes(value) { showHitboxes = value; }
 export function setTutorialActive(value) { tutorialActive = value; }
 export function setTutorialShipX(value) { tutorialShipX = value; }
 export function setTutorialAsteroids(value) { tutorialAsteroids = value; }
@@ -38,9 +41,9 @@ export function setShield(value) { shield = value; }
 export function setHasShield(value) { hasShield = value; }
 export function setShieldCollected(value) { shieldCollected = value; }
 export function setShieldSpawned(value) { shieldSpawned = value; }
+export function setStarField(value) { starField = value; }
 
-export let starField = [];
-
+// Функция для инициализации звездного поля
 export function initStarField(width, height) {
     starField = [];
     const starCount = 150;
@@ -88,5 +91,3 @@ export function initStarField(width, height) {
         });
     }
 }
-
-export function setStarField(value) { starField = value; }

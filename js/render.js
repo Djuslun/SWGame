@@ -39,8 +39,6 @@ export function drawShip(ctx, ship, hasShield) {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("SHIELD", 0, 48);
-
-
     }
 
     ctx.shadowBlur = 0;
@@ -143,7 +141,6 @@ export function drawAsteroid(ctx, asteroid) {
     ctx.restore();
 }
 
-// Новая функция с разнообразными звездами
 export function drawStars(ctx, width, height, offset) {
     // Нормализуем offset
     const normalizedOffset = offset % height;
@@ -193,9 +190,11 @@ export function drawStars(ctx, width, height, offset) {
             ctx.fillStyle = star.color;
 
             if (star.size > 2) {
+                // Большие звезды рисуем крестиком
                 ctx.fillRect(star.x - star.size/2, y - star.size/6, star.size, star.size/3);
                 ctx.fillRect(star.x - star.size/6, y - star.size/2, star.size/3, star.size);
             } else {
+                // Маленькие звезды - просто точки
                 ctx.fillRect(star.x, y, star.size, star.size);
             }
         }
@@ -203,6 +202,7 @@ export function drawStars(ctx, width, height, offset) {
         ctx.restore();
     }
 }
+
 
 export function drawCursor(ctx, x, y, angle) {
     ctx.save();

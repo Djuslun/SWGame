@@ -8,13 +8,50 @@
 </head>
 <body>
 
+<audio id="bgMusic" loop>
+    <source src="./assets/Soundtrack.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+</audio>
+
 <div id="ui">
     Очки: <span id="score">0</span>
 </div>
 
+<!-- Кнопка-медаль в углу -->
+<button id="medalButton" class="medal-button" onclick="showResults()">
+    <span class="medal-icon">🏆</span>
+</button>
+
+<!-- Модальное окно с результатами -->
+<div id="resultsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" onclick="closeResults()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="result-item">
+                <span class="result-label">Максимальный счет</span>
+                <span class="result-value" id="highScore">0</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Всего игр</span>
+                <span class="result-value" id="totalGames">0</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Всего очков</span>
+                <span class="result-value" id="totalScore">0</span>
+            </div>
+            <div class="result-divider"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-button" onclick="closeResults()">Закрыть</button>
+            <button class="modal-button reset-button" onclick="resetStats()">Сбросить</button>
+        </div>
+    </div>
+</div>
+
 <div id="startScreen">
-    <h1>🚀 Asteroids</h1>
-    <p>Управляйте кораблём пальцем и уклоняйтесь от астероидов</p>
+    <h2>Управляйте кораблём пальцем и уклоняйтесь от астероидов</h2>
     <p>Наберите 50 очков чтобы пройти кросстендовый конкурс</p>
     <button id="startButton">Начать игру</button>
 </div>
@@ -22,8 +59,7 @@
 <div id="gameOver">
     <h1 id="gameOverTitle">💥 Столкновение!</h1>
     <p id="finalScore"></p>
-    <button onclick="restartGame()">Играть снова</button>
-    <button onclick="goToMainMenu()" style="margin-top: 10px; background: #666;">В меню</button>
+    <button id="restartButton" >Играть снова</button>
 </div>
 
 <canvas id="game"></canvas>
