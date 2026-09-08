@@ -1,12 +1,12 @@
 // main.js
 import {
-    width, height, setWidth, setHeight,
+    setWidth, setHeight,
     setShip, setAsteroids, setScore,
     setDifficulty, setSpawnTimer, setGameRunning, setLastTime,
     setTutorialActive, gameRunning, isTouchingShip, tutorialActive,
     score, setHasShield, setShieldSpawned, setShield, initStarField
 } from './state.js';
-import { initGame, createShield } from './game-objects.js';
+import { initGame } from './game-objects.js';
 import { resizeCanvas, showScore, goFullscreen, initRoundRect } from './utils.js';
 import { update, setGameOverCallback, setWinCallback } from './game-loop.js';
 import { startTutorial, setStartGameCallback } from './tutorial.js';
@@ -14,7 +14,6 @@ import { handleTouchStart, handleTouchMove, handleTouchEnd, moveShip } from './c
 
 // DOM элементы
 const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("score");
 const gameOverEl = document.getElementById("gameOver");
 const gameOverTitle = document.getElementById("gameOverTitle");

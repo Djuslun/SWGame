@@ -33,7 +33,7 @@ export function handleTouchStart(x, y) {
     }
 }
 
-export function handleTouchMove(x, y) {
+export function handleTouchMove(x) {
     if (!isTouchingShip) return;
 
     const newX = x - touchOffsetX;

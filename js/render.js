@@ -1,6 +1,6 @@
 // render.js - только обновленная функция drawStars и вспомогательные функции
-import { asteroidImage, cursorImage } from './main.js';
-import { starField } from './state.js';
+import {asteroidImage, cursorImage} from './main.js';
+import {starField} from './state.js';
 
 export function drawShip(ctx, ship, hasShield) {
     ctx.save();
@@ -179,8 +179,7 @@ export function drawStars(ctx, width, height, offset) {
             ctx.fill();
         } else {
             // Обычная звезда
-            const alpha = star.brightness * (0.7 + twinkle * 0.3);
-            ctx.globalAlpha = alpha;
+            ctx.globalAlpha = star.brightness * (0.7 + twinkle * 0.3);
 
             if (star.size > 2) {
                 ctx.shadowColor = star.color;

@@ -1,12 +1,17 @@
 // tutorial.js
 import {
-    width, height, tutorialShipX, tutorialAsteroids, tutorialTime, tutorialActive,
-    setTutorialShipX, setTutorialAsteroids, setTutorialTime,
-    setTutorialActive
+    height,
+    setTutorialActive,
+    setTutorialAsteroids,
+    setTutorialShipX,
+    setTutorialTime,
+    tutorialActive,
+    tutorialAsteroids,
+    tutorialShipX,
+    tutorialTime,
+    width
 } from './state.js';
-import {
-    drawStars, drawTouchZone, drawTutorialShip, drawTutorialAsteroid, drawCursor
-} from './render.js';
+import {drawCursor, drawStars, drawTouchZone, drawTutorialAsteroid, drawTutorialShip} from './render.js';
 
 let startGameCallback = null;
 
@@ -36,7 +41,7 @@ export function startTutorial() {
     requestAnimationFrame(updateTutorial);
 }
 
-export function updateTutorial(timestamp) {
+export function updateTutorial() {
     if (!tutorialActive) return;
 
     setTutorialTime(tutorialTime + 1/60);
@@ -107,7 +112,6 @@ export function updateTutorial(timestamp) {
 
     ctx.save();
 
-    const maxTextWidth = Math.min(width * 0.7, 500);
     const textY = Math.min(50, height * 0.08);
 
     ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
@@ -157,8 +161,7 @@ export function updateTutorial(timestamp) {
 
     ctx.fillStyle = "rgba(0, 212, 255, 0.8)";
     ctx.font = "bold 16px Arial";
-    const pulseAlpha = 0.5 + Math.sin(tutorialTime * 1.5) * 0.5;
-    ctx.globalAlpha = pulseAlpha;
+    ctx.globalAlpha = 0.5 + Math.sin(tutorialTime * 1.5) * 0.5;
     const hintY = height - 50;
     ctx.fillText("👆 Коснитесь экрана, чтобы начать игру", width/2, hintY);
     ctx.globalAlpha = 1.0;

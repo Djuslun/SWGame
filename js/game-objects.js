@@ -1,6 +1,6 @@
 // game-objects.js
 import { MAX_SPEED } from './config.js';
-import { ship, score, difficulty, height, width } from './state.js';
+import { score, difficulty, height, width } from './state.js';
 
 export function initGame() {
     return {
