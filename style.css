@@ -462,4 +462,5 @@ button:hover {
 
 #finalScore {
     text-align: center;
+    padding-inline: 12px;
 }
