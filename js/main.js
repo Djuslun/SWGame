@@ -4,7 +4,7 @@ import {
     setShip, setAsteroids, setScore,
     setDifficulty, setSpawnTimer, setGameRunning, setLastTime,
     setTutorialActive, gameRunning, isTouchingShip, tutorialActive,
-    score, setHasShield, setShieldSpawned, setShield, initStarField
+    score, setHasShield, setShieldSpawned, setShield, initStarField, setShipExplosion
 } from './state.js';
 import { initGame } from './game-objects.js';
 import { resizeCanvas, showScore, goFullscreen, initRoundRect, exitFullscreen } from './utils.js';
@@ -76,8 +76,6 @@ function updateMedalVisibility() {
 
     // Показываем медаль только если максимальный счет >= 50
     // и мы в меню, не в игре и не в туториале
-    console.log( gameOverEl.style.display !== 'none',gameOverEl.style.display )
-    console.log(startScreen.style.display !== 'none', startScreen.style.display)
     if (shouldShowMedal() && (startScreen.style.display !== 'none' || gameOverEl.style.display !== 'none') && !tutorialActive && !gameRunning) {
         medalButton.style.display = 'flex';
     } else {
@@ -194,6 +192,12 @@ function init() {
     setHasShield(false);
     setShieldSpawned(false);
     setShield(null);
+
+    setShipExplosion({
+        active: false,
+        particles: [],
+        time: 0
+    });
 
     scoreEl.textContent = '0';
     gameOverEl.style.display = "none";

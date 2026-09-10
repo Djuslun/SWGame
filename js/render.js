@@ -1,8 +1,10 @@
 // render.js - только обновленная функция drawStars и вспомогательные функции
 import {asteroidImage, cursorImage} from './main.js';
-import {starField} from './state.js';
+import {ship, starField} from './state.js';
 
 export function drawShip(ctx, ship, hasShield) {
+    if (shipExplosion.active) return;
+
     ctx.save();
     ctx.translate(ship.x, ship.y);
 
@@ -384,4 +386,86 @@ export function drawHyperdriveEffect(ctx, width, height, progress) {
     ctx.fillRect(0, 0, width, height);
 
     ctx.restore();
+}
+
+import { shipExplosion } from './state.js';
+
+export function drawShipExplosion(ctx, width, height) {
+    if (!shipExplosion.active) return;
+
+    // Сначала рисуем искры (огонь) — они ярче и должны быть сверху
+    for (const particle of shipExplosion.particles) {
+        if (!particle.isSpark) continue;
+
+        const alpha = Math.max(0, particle.life / particle.maxLife);
+
+        ctx.save();
+
+        // Огненное свечение
+        ctx.shadowColor = 'rgba(255, 140, 0, 0.9)';
+        ctx.shadowBlur = 20 * alpha;
+
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = particle.color;
+
+        // Искра — круг
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // Затем рисуем осколки корабля (треугольники)
+    for (const particle of shipExplosion.particles) {
+        if (particle.isSpark) continue;
+
+        const alpha = Math.max(0, particle.life / particle.maxLife);
+
+        ctx.save();
+
+        ctx.translate(particle.x, particle.y);
+        ctx.rotate(particle.rotation);
+
+        // Лёгкое свечение для осколков
+        ctx.shadowColor = 'rgba(255, 100, 0, 0.5)';
+        ctx.shadowBlur = 8 * alpha;
+
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = particle.color;
+
+        // Осколок — треугольник
+        ctx.beginPath();
+        ctx.moveTo(0, -particle.size);
+        ctx.lineTo(particle.size * 0.7, particle.size);
+        ctx.lineTo(-particle.size * 0.7, particle.size);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // Дополнительный центральный огненный шар в первые моменты взрыва
+    if (shipExplosion.time < 0.3) {
+        const flashAlpha = 1 - (shipExplosion.time / 0.3);
+
+        ctx.save();
+        ctx.globalAlpha = flashAlpha;
+
+        const gradient = ctx.createRadialGradient(
+            ship.x, ship.y, 0,
+            ship.x, ship.y, 80 * (1 + shipExplosion.time * 2)
+        );
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0.2, 'rgba(255, 220, 100, 0.9)');
+        gradient.addColorStop(0.5, 'rgba(255, 140, 0, 0.5)');
+        gradient.addColorStop(1, 'rgba(255, 80, 0, 0)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(ship.x, ship.y, 80 * (1 + shipExplosion.time * 2), 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
 }

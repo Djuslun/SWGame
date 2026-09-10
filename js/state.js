@@ -89,3 +89,11 @@ export function initStarField(width, height) {
         });
     }
 }
+
+export let shipExplosion = {
+    active: false,
+    particles: [],
+    time: 0
+};
+
+export function setShipExplosion(value) { shipExplosion = value; }

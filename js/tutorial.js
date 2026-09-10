@@ -121,8 +121,8 @@ export function updateTutorial() {
     const titleWidth = ctx.measureText("👆 УПРАВЛЕНИЕ").width;
 
     ctx.font = "14px Arial";
-    const text1 = "Коснись зоны возле корабля и, удерживая палец на экране,";
-    const text2 = "двигай  корабль  влево-вправо";
+    const text1 = "Коснись зоны возле корабля и, удерживая палец";
+    const text2 = " на экране, двигай  корабль  влево-вправо";
 
     const textWidth1 = ctx.measureText(text1).width;
     const textWidth2 = ctx.measureText(text2).width;
@@ -153,9 +153,7 @@ export function updateTutorial() {
     ctx.fillText(text1, width/2, currentY);
     currentY += 22;
     ctx.fillText(text2, width/2, currentY);
-    currentY += 22;
-    ctx.fillStyle = "#ffcc00";
-    ctx.fillText(text3, width/2, currentY);
+
 
     ctx.fillStyle = "rgba(0, 212, 255, 0.8)";
     ctx.font = "bold 16px Arial";
