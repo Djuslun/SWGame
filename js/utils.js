@@ -23,6 +23,21 @@ export function goFullscreen() {
     }
 }
 
+// Функция для выхода из полноэкранного режима
+export function exitFullscreen() {
+    if (document.fullscreenElement) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen().catch(err => {
+                console.log('Exit fullscreen failed:', err);
+            });
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE/Edge */
+            document.msExitFullscreen();
+        }
+    }
+}
+
 export function initRoundRect() {
     if (!CanvasRenderingContext2D.prototype.roundRect) {
         CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {

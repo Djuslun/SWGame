@@ -7,7 +7,7 @@ import {
     score, setHasShield, setShieldSpawned, setShield, initStarField
 } from './state.js';
 import { initGame } from './game-objects.js';
-import { resizeCanvas, showScore, goFullscreen, initRoundRect } from './utils.js';
+import { resizeCanvas, showScore, goFullscreen, initRoundRect, exitFullscreen } from './utils.js';
 import { update, setGameOverCallback, setWinCallback } from './game-loop.js';
 import { startTutorial, setStartGameCallback } from './tutorial.js';
 import { handleTouchStart, handleTouchMove, handleTouchEnd, moveShip } from './controls.js';
@@ -225,12 +225,13 @@ function finishGame(isWin = false) {
     // Добавляем дополнительный текст если набрано 50+ очков
     if (score >= 50) {
         const currentText = finalScoreEl.textContent;
-        finalScoreEl.textContent = currentText + '\n🏆 Набрано 50+ очков! Покажите это участнику стенда чтобы получить отметку о прохождении кросстендового конкурса. Либо Вы можете продолжить игру (показать результат можно будет нажав на медаль в меню)';
+        finalScoreEl.textContent = currentText + '\n🏆 Набрано 50+ очков! Покажите это участнику стенда чтобы получить отметку о прохождении кросстендового конкурса';
     }
 
     gameOverEl.style.display = "flex";
     showScore(scoreElement, false);
     saveStats();
+    exitFullscreen();
 }
 
 function gameOver() {

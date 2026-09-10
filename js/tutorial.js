@@ -121,14 +121,12 @@ export function updateTutorial() {
     const titleWidth = ctx.measureText("👆 УПРАВЛЕНИЕ").width;
 
     ctx.font = "14px Arial";
-    const text1 = "Касайтесь корабля или области под ним,";
-    const text2 = "и ведите пальцем влево-вправо";
-    const text3 = "Астероиды летят сверху — уклоняйтесь!";
+    const text1 = "Коснись зоны возле корабля и, удерживая палец на экране,";
+    const text2 = "двигай  корабль  влево-вправо";
 
     const textWidth1 = ctx.measureText(text1).width;
     const textWidth2 = ctx.measureText(text2).width;
-    const textWidth3 = ctx.measureText(text3).width;
-    const maxTextWidthActual = Math.max(titleWidth, textWidth1, textWidth2, textWidth3);
+    const maxTextWidthActual = Math.max(titleWidth, textWidth1, textWidth2);
 
     const blockWidth = Math.min(maxTextWidthActual + padding * 2, width - 40);
     const blockHeight = 30 + 24 + 24 + 24 + padding * 2;
